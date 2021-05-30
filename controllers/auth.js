@@ -39,7 +39,7 @@ exports.login = async (req, res, next) => {
 
 exports.refresh = async (req, res, next) => {
 
-    if(!req.headers.authorization && !req.headers.authorization.startsWith("Bearer"))
+    if(!req.headers.authorization || !req.headers.authorization.startsWith("Bearer"))
     {
         return next(new ErrorResponse("Missing refresh token", 401))
     }
@@ -47,7 +47,6 @@ exports.refresh = async (req, res, next) => {
 
     try {
         const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
-        console.log(decodedRefreshToken)
         if(!decodedRefreshToken.refreshToken) return next(new ErrorResponse("Invalid token", 401))
 
         const user = await User.findOne({_id: decodedRefreshToken.id})
@@ -62,7 +61,7 @@ exports.refresh = async (req, res, next) => {
         })
 
     } catch (error) {
-        return next(new ErrorResponse("invalid tokenzeira", 401))
+        return next(new ErrorResponse("invalid token", 401))
     }
 };
 
