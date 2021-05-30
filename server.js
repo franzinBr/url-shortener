@@ -29,7 +29,6 @@ app.use('/api/v1/user', require('./routes/user'));
 // Error handler
 app.use(errorHandler);
 
-
 const PORT = process.env.PORT || 5000;
 
 

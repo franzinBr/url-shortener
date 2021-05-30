@@ -46,30 +46,6 @@ UserSchema.methods.comparePasswords = async function(password) {
     return await bcrypt.compare(password, this.password);
 };
 
-UserSchema.methods.getAuthToken = function () {
-    return authToken = jwt.sign(
-        { 
-            id: this._id, 
-            authToken: true 
-        },
-        process.env.JWT_AUTH_SECRET,
-        {expiresIn: process.env.JWT_AUTH_EXPIRE}
-        )
-}
-
-UserSchema.methods.getRefreshToken = function () {
-    return refreshToken = jwt.sign(
-        { 
-            id: this._id, 
-            refreshToken: true 
-        },
-        process.env.JWT_REFRESH_SECRET,
-        {expiresIn: process.env.JWT_REFRESH_EXPIRE}
-        )
-
-}
-
-
 
 const User = mongoose.model("User", UserSchema)
 
