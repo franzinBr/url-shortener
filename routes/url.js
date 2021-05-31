@@ -4,8 +4,8 @@ const {createUrlShortener, getUrlShortener, deleteUrlShortener} = require('../co
 const {isAuth} = require('../middlewares/auth')
 
 router.route('/').post(isAuth, createUrlShortener)
-router.route('/:urlShortener').get(getUrlShortener)
-router.route('/').delete(deleteUrlShortener)
+router.route('/:code').get(getUrlShortener)
+router.route('/').delete(isAuth, deleteUrlShortener)
 
 
 module.exports = router;
