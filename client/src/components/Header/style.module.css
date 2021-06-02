@@ -1,0 +1,26 @@
+.header {
+    background-color: #2d3436;
+    position: fixed;
+    z-index: 1000;
+    top: 0px;
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+}
+
+.logo {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/*@media (max-width: 320px)
+{
+    .nav {
+        height: 8rem;
+    }
+}*/

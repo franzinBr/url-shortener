@@ -1,0 +1,49 @@
+.form {
+
+    display: flex;
+    justify-content: center;
+    width: 90vw;
+    height: 3rem;
+}
+
+
+input {
+    display: block;
+    width: 90vw;
+    border: none;
+    background: #dfe6e9;
+    outline:none;
+    border-radius: 1rem 0 0 1rem;
+    padding: 1rem;
+    z-index: 1;
+}
+
+button {
+    display: block;
+    width: 10vw;
+    border-radius: 0 1rem 1rem 0;
+    border: none;
+    cursor: pointer;
+    background: #2d3436;
+}
+
+.svg{
+    fill: #fff;
+    width: 2rem ;
+    height: 2rem;
+}
+
+
+
+button:hover > svg{
+    transform: scale(.7)
+}
+
+.people {
+    position: absolute;
+    top: 28%;
+    z-index: 0;
+    width: 15rem;
+    height: 15rem;
+
+}
