@@ -1,0 +1,33 @@
+.user {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.forms {
+    width: 40rem;
+    padding: 2rem 1.5rem;
+    margin: 2rem;
+    box-shadow: .5rem .5rem 1rem .1rem rgba(0, 0, 0, .5);
+    
+}
+
+.title {
+    font-family: var(--type-second);
+    line-height: 1;
+    font-size: 3rem;
+    position: relative;
+}
+.title::before {
+    content: '';
+    position: absolute;
+    background: tomato;
+    display: block;
+    height: .4rem;
+    width: 2rem;
+    top: 2.65rem;
+
+
+}

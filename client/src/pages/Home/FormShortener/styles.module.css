@@ -7,7 +7,7 @@
 }
 
 
-input {
+.url {
     display: block;
     width: 90vw;
     border: none;
@@ -18,7 +18,7 @@ input {
     z-index: 1;
 }
 
-button {
+.shortener {
     display: block;
     width: 10vw;
     border-radius: 0 1rem 1rem 0;
@@ -35,7 +35,7 @@ button {
 
 
 
-button:hover > svg{
+.shortener:hover > svg{
     transform: scale(.7)
 }
 

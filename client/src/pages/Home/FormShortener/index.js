@@ -13,8 +13,8 @@ const FormShortener = () => {
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <People className={styles.people} /> 
-            <input type="text" />
-            <button><Enviar className={styles.svg} /> </button>
+            <input className={styles.url} type="text" />
+            <button className={styles.shortener}><Enviar className={styles.svg} /> </button>
         </form>
     )
 }

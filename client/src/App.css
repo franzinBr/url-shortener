@@ -1,7 +1,24 @@
+:root {
+    --type-first: Helvetica, Arial, sans-serif;
+    --type-second: 'Spectral', Georgia;
+}
+
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+
+body {
+    font-family: var(--type-first);
+}
+
+button,
+input {
+  font-size: 1rem;
+  font-family: var(--type-first);
+  color: #333;
 }
 
 .App {
@@ -22,6 +39,11 @@ img {
     max-width: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: #333;
+}
+  
 .container {
     padding: 0 1rem;
     margin: 0 auto;

@@ -15,7 +15,7 @@ function App() {
       <main className="AppMain">
         <Routes>
           <Route path="/" element={ <Home />}/>
-          <Route path="/user" element={ <User />}/>
+          <Route path="/user/*" element={ <User />}/>
           <Route path="*" element={ <Redirect />}/>
         </Routes>
       </main>
