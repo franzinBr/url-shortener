@@ -16,7 +16,12 @@ exports.register = async (req, res, next) => {
         // Send email here!!!
         
         console.log(verifyEmailToken)
-        sendTokens(user, 201, res);
+
+        res.status(201).json({
+            success: true,
+            message: "Please verify your email"
+        })
+    //    sendTokens(user, 201, res);
 
     } catch (error) {
         next(error);
@@ -55,38 +60,35 @@ exports.login = async (req, res, next) => {
         const compare = await user.comparePasswords(password);
         if(!compare) return next(new ErrorResponse("Invalid credentials", 404));
 
-        sendTokens(user, 200, res)
+        if(!user.isVerified) return next(new ErrorResponse("Please verify your email", 404))
+
+        const authToken = getAuthToken(user._id);
+        const refreshToken = getRefreshToken(user._id);
+        sendAuthTokenAndSetCookie(authToken, refreshToken, res, 200)
+
+
     } catch (error) {
         res.status(500).json({sucess: false, error: error.message})
     }
 
 };
 
-exports.refresh = async (req, res, next) => {
-
-    if(!req.headers.authorization || !req.headers.authorization.startsWith("Bearer"))
-    {
-        return next(new ErrorResponse("Missing refresh token", 401))
-    }
-    const refreshToken = req.headers.authorization.split(" ")[1]
+exports.refresh = async (req, res, next) => {    
+    const refreshToken =  req.cookies.refreshtoken
+    if(!refreshToken) return next(new ErrorResponse("Invalid token, please login again", 401))
 
     try {
         const decodedRefreshToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
-        if(!decodedRefreshToken.refreshToken) return next(new ErrorResponse("Invalid token", 401))
+        if(!decodedRefreshToken.refreshToken) return next(new ErrorResponse("Invalid token, please login again", 401))
 
         const user = await User.findOne({_id: decodedRefreshToken.id})
         if(!user) return next(new ErrorResponse("Invalid token", 401))
 
         const authToken = getAuthToken(user._id);
-
-        res.status(200).json({
-            success: true,
-            refreshToken,
-            authToken
-        })
+        sendAuthTokenAndSetCookie(authToken, refreshToken, res, 201)
 
     } catch (error) {
-        return next(new ErrorResponse("invalid token", 401))
+        return next(new ErrorResponse("invalid token, please login again", 401))
     }
 };
 
@@ -105,12 +107,16 @@ exports.resetpassword = (req, res, next) => {
 };
 
 
-const sendTokens = (user, statusCode, res) => {
-    const authToken = getAuthToken(user._id);
-    const refreshToken = getRefreshToken(user._id);
+const sendAuthTokenAndSetCookie = (authToken, refreshToken, res, statusCode ) => {
+
+    res.cookie('refreshtoken', refreshToken, {
+        httpOnly: true,
+        path: '/api/v1/refreshToken',
+     //   maxAge: 30*24*60*60*1000 // 30days
+    })
+
     res.status(statusCode).json({
         success: true,
         authToken,
-        refreshToken,
     })
 }

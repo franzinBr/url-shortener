@@ -3,6 +3,7 @@ const express  = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors')
+var cookieParser = require('cookie-parser')
 const connectMongoDB = require('./config/db');
 const errorHandler = require('./middlewares/error')
 
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use(morgan("common"))
 app.use(helmet());
 app.use(cors());
+app.use(cookieParser())
 
 // API ROUTES
 
