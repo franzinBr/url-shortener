@@ -1,6 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
 const {getAuthToken, getRefreshToken} = require('../utils/jwtUtil')
 
 
@@ -10,13 +11,37 @@ exports.register = async (req, res, next) => {
 
     try {
         const user = await User.create({fullname, email, password});
-    
+        const verifyEmailToken = user.getVerifyEmailToken()
+
+        // Send email here!!!
+        
+        console.log(verifyEmailToken)
         sendTokens(user, 201, res);
 
     } catch (error) {
         next(error);
     }
 };
+
+exports.verify = async (req, res, next) => {
+    const verifyEmailToken = crypto.createHash("sha256").update(req.params.tokenVerify).digest("hex");
+
+    try {
+        const user = await User.findOne({
+            verifyEmailToken
+        })
+        if(!user) return next(new ErrorResponse("Invalid Verify Token", 400))
+        
+        user.isVerified = true
+        user.verifyEmailToken = undefined;
+        await user.save()
+
+        res.status(201).json({success: true, message: "email verified successfully"})
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 exports.login = async (req, res, next) => {
     const {email, password} = req.body;
