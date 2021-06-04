@@ -1,7 +1,29 @@
-.home{
+
+.home {
     min-height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 30vh auto;
+    gap: 1rem
+
 }
 
+/* .home{
+    min-height: 80vh;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}  */
+
+.shortenerForm{
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+
+}
+
+.urls {
+
+}
