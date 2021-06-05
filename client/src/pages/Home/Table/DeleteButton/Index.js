@@ -1,8 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styles from './styles.module.css'
 
 const DeleteButton = () => {
     const [showConfirm, setShowConfirm] = React.useState(false)
+
+    const {currentPage} = useSelector(state => state.table)
+
+    React.useEffect(() => {
+        setShowConfirm(false)
+    }, [currentPage])
 
     function handleClick()
     {

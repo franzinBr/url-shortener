@@ -1,27 +1,20 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectItemsPage } from '../../../store/slices/table'
 import DeleteButton from './DeleteButton/Index'
+import Pagination from './Pagination'
 import styles from './styles.module.css'
+
 
 const Table = () => {
 
-    const urls = [
-        {
-            shortener: 'askld',
-            complete: 'www.google.com.br',
-            clicks: 4,
-        },
-        {
-            shortener: 'asd23',
-            complete: 'www.yotube.com.br/dasdas/asfad/as/d/wqehjkashdjkawyuqihajshdiquweyuiq',
-            clicks: 90,
-        }
-    ]
-
+    const urls = useSelector(selectItemsPage)
     
+    if(urls.length === 0) return null
 
     return (
         <div className={styles.tableContainer}>
-            <table className={styles.table}>
+            <table className={`${styles.table} animeLeft-6`}>
                 <thead>
                     <tr>
                         <th>Shortener</th>
@@ -30,9 +23,9 @@ const Table = () => {
                         <th>Delete</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {urls && urls.map((item, row) => (
-                        <tr key={row}>
+                        <tr key={row} >
                             {Object.entries(item).map((url, column) => (
                                 <td key={column} data-heading={url[0]}>
                                     {url[1]}
@@ -43,6 +36,7 @@ const Table = () => {
                         ))}
                 </tbody>
             </table>
+            <Pagination />
         </div>
     )
 }

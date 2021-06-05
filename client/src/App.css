@@ -54,6 +54,22 @@ a {
     transform: translateX(-20px);
     animation: anime 0.3s forwards;
   }
+
+  .animeLeft-4 {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: anime 0.4s forwards;
+  }
+  .animeLeft-5 {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: anime 0.5s forwards;
+  }
+  .animeLeft-6 {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: anime 0.6s forwards;
+  }
   
   .animeRight {
     opacity: 0;

@@ -1,0 +1,28 @@
+.pagesContainer {
+    padding-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagesNumber {
+    display: flex;
+    list-style: none;
+}
+
+.pagesNumber li {
+    margin-right: .1rem;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    border: 1px solid #2d3436;
+    transition: all .2s ease;
+}
+
+
+
+.pagesNumber li:hover,
+.pagesNumber li.active{
+    background-color: #2d3436;
+    color: #fff
+}
+
