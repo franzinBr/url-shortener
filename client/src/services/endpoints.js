@@ -1,13 +1,18 @@
 import api from './api'
+import axios from 'axios'
+
+const options = {
+    headers: {"content-type": "application/json"}
+}
 
 // AUTH ENDPOINTS
 export const LOGIN_POST = async (user) => {
-    const res = await api.post('/auth/login', user)
+    const res = await api.post('/auth/login', user, options)
     return res
 }
 
 export const REGISTER_POST = async (user_new) => {
-    const res = await api.post('/auth/register', user_new)
+    const res = await api.post('/auth/register', user_new, options)
     return res
 }
 
@@ -44,7 +49,7 @@ export const URL_GET = async(code) => {
     return res
 }
 
-export const URL_DELETE = async(code) => {
+export const URL_DELETE = async(code, token) => {
     const res = await api.get('/url', code, {
         headers: {Authorization:  `Bearer ${token}`}
     })
