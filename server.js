@@ -16,9 +16,19 @@ const app = express();
 
 // Middlewares 
 app.use(express.json())
+app.use(express.urlencoded({extended:false}));
 app.use(morgan("common"))
 app.use(helmet());
-app.use(cors());
+app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
+
+/*const corsConfig = {
+    origin: true,
+    credentials: true,
+  };
+  
+  app.use(cors(corsConfig));
+  app.options('*', cors(corsConfig));*/
+
 app.use(cookieParser())
 
 // API ROUTES
