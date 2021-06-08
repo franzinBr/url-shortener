@@ -60,7 +60,7 @@ exports.login = async (req, res, next) => {
         const compare = await user.comparePasswords(password);
         if(!compare) return next(new ErrorResponse("Invalid credentials", 404));
 
-        if(!user.isVerified) return next(new ErrorResponse("Please verify your email", 404))
+        if(!user.isVerified) return next(new ErrorResponse("Please verify your email", 403))
 
         const authToken = getAuthToken(user._id);
         const refreshToken = getRefreshToken(user._id);
@@ -73,7 +73,22 @@ exports.login = async (req, res, next) => {
 
 };
 
-exports.refresh = async (req, res, next) => {    
+exports.logout = async (req, res, next) => {
+    try {
+        res.clearCookie('refreshtoken', {path: '/api/v1/auth/refresh'})
+        return res.status(200).json({
+            success: true,
+            message: "user logged out successfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message
+        })
+    }
+}
+
+exports.refresh = async (req, res, next) => { 
     const refreshToken =  req.cookies.refreshtoken
     if(!refreshToken) return next(new ErrorResponse("Invalid token, please login again", 401))
 
@@ -111,12 +126,15 @@ const sendAuthTokenAndSetCookie = (authToken, refreshToken, res, statusCode ) =>
 
     res.cookie('refreshtoken', refreshToken, {
         httpOnly: true,
-        path: '/api/v1/refreshToken',
-     //   maxAge: 30*24*60*60*1000 // 30days
+        path: '/api/v1/auth/refresh', 
+        //maxAge: 30*24*60*60*1000 // 30days
     })
+    
+    let {exp} = jwt.decode(authToken)
 
     res.status(statusCode).json({
         success: true,
         authToken,
+        exp,
     })
 }
