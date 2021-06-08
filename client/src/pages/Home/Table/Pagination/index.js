@@ -7,7 +7,7 @@ const Pagination = () => {
 
     const dispatch = useDispatch();
     const {numberOfPages, currentPage} = useSelector((state) => state.table)
-    const [visiblePages, setVisiblePages] = React.useState(5)
+    const visiblePages = 5
 
     const pages = React.useMemo(() => Array.from({length: numberOfPages}, (_, i) => i+1), [numberOfPages])
 
