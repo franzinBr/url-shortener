@@ -42,8 +42,8 @@ export const URLALL_GET = async (token) => {
 
 // URL ENDPOINTS
 
-export const URL_POST = async(url, token) => {
-    const res = await api.post('/url', {
+export const URL_POST = async(completeUrl, token) => {
+    const res = await api.post('/url', {completeUrl}, {
         headers: {Authorization:  `Bearer ${token}`}
     })
     return res
