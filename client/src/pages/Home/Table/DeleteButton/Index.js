@@ -1,25 +1,24 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { removeUrl } from '../../../../store/slices/table';
+import { useSelector } from 'react-redux'
 import styles from './styles.module.css'
 
-const DeleteButton = ({code}) => {
-    const [showConfirm, setShowConfirm] = React.useState(false);
-    const {table, auth} = useSelector(state => state);
-    const dispatch = useDispatch();
+const DeleteButton = () => {
+    const [showConfirm, setShowConfirm] = React.useState(false)
+
+    const {currentPage} = useSelector(state => state.table)
 
     React.useEffect(() => {
         setShowConfirm(false)
-    }, [table.currentPage, table.data])
+    }, [currentPage])
 
-    function deleteUrl()
+    function handleClick()
     {
-        dispatch(removeUrl(code, auth.data.authToken))
+        // delete url here
     }
     return (
         <div className={styles.btn}>
             {showConfirm && <div className={`${styles.confirm} animeLeft`}>
-                <button className={styles.btnConfirm} onClick={deleteUrl}>Confirm</button>
+                <button className={styles.btnConfirm} onClick={handleClick}>Confirm</button>
                 <button className={styles.btnCancel} onClick={() => setShowConfirm(false)}>Cancel</button>
             </div>}
             {!showConfirm && <div onClick={() => setShowConfirm(true)} className={`${styles.delete} animeRight`}>Delete</div>}
