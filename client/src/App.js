@@ -25,7 +25,7 @@ function App() {
     async function refreshToken()
     {
       const refreshed = await dispatch(refresh())
-      if(refreshed.success) 
+      if(refreshed?.success) 
       {
         expiresIn = (refreshed.exp * 1000) - new Date().getTime()
         clearTimeout(timeout)
@@ -36,7 +36,6 @@ function App() {
     }
     refreshToken()
 
-    
     return () => clearTimeout(timeout)
   }, [dispatch, auth.logged])
 
