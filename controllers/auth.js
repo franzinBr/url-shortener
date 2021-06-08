@@ -3,8 +3,7 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const {getAuthToken, getRefreshToken} = require('../utils/jwtUtil')
-
-
+const {convertTimes} = require('../utils/convertTimes')
 
 exports.register = async (req, res, next) => {
     const {fullname, email, password} = req.body;
@@ -76,6 +75,7 @@ exports.login = async (req, res, next) => {
 exports.logout = async (req, res, next) => {
     try {
         res.clearCookie('refreshtoken', {path: '/api/v1/auth/refresh'})
+        res.clearCookie('aux', {path: '/'})
         return res.status(200).json({
             success: true,
             message: "user logged out successfully"
@@ -127,7 +127,11 @@ const sendAuthTokenAndSetCookie = (authToken, refreshToken, res, statusCode ) =>
     res.cookie('refreshtoken', refreshToken, {
         httpOnly: true,
         path: '/api/v1/auth/refresh', 
-        //maxAge: 30*24*60*60*1000 // 30days
+        maxAge: convertTimes(process.env.JWT_REFRESH_EXPIRE)
+    })
+    res.cookie('aux', true, {
+        path: '/', 
+        maxAge: convertTimes(process.env.JWT_REFRESH_EXPIRE)
     })
     
     let {exp} = jwt.decode(authToken)
