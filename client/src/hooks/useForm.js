@@ -27,11 +27,6 @@ const useForm = (type) => {
             setError("this fields is required")
             return false;
         }
-        if(type === "password" && value.length < 8)
-        {
-            setError("this fields is required")
-            return false;
-        }
         if(types[type] && !types[type].regex.test(value))
         {
             setError(types[type].message);
