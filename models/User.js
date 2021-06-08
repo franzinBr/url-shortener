@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
+const crypto = require('crypto');
+const ErrorResponse = require('../utils/errorResponse');
 
 const UserSchema = new mongoose.Schema({
     fullname: {
@@ -42,6 +43,9 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre("save", async function(next) {
     if(!this.isModified("password")) {next();}
 
+
+   let passwordRegex = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+   if(!passwordRegex.test(this.password)) return next(new ErrorResponse("the password must contain at least 8 characters, with at least one digit, one lowercase letter, one uppercase letter and one special character", 400))
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt)
     next();
