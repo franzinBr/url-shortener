@@ -6,12 +6,11 @@ import RegisterForm from './RegisterForm'
 import ForgotForm from './ForgotForm'
 import { useSelector } from 'react-redux'
 
+
 const User = () => {
     const [title, setTitle] = React.useState('');
     const location = useLocation();
-    const auth = useSelector((state) => state.auth);
-
-
+    const isLogged = useSelector((state) => state.auth.logged);
 
     React.useEffect( () => {
         const {pathname} = location;
@@ -23,8 +22,8 @@ const User = () => {
 
     }, [location])
 
-    if(auth.data?.authToken) return <Navigate to="/" />
-    if(!auth.data?.authToken && !auth.loading) return (
+    if(isLogged) return <Navigate to="/" />
+    if(!isLogged) return (
         <section className={styles.user}>
             <div className={styles.forms}>
                 <h1 className={styles.title}>{title}</h1>
