@@ -75,7 +75,15 @@ export const logout = () => async(dispatch) => {
 }
 
 export const refresh = () => async(dispatch) => {
-    const res = await dispatch(fetchUser(REFRESH_POST))
-    if(res.type === 'auth/fetchError') dispatch(resetAll())
-    return res.payload
+    
+    var cookie = document.cookie.split(';');
+    cookie.filter((c) => c.split('=')[0] === 'aux' && c.split('=')[1] === true)
+    if(cookie[0] === "aux=true")
+    {
+        const res = await dispatch(fetchUser(REFRESH_POST))
+        if(res.type === 'auth/fetchError') dispatch(resetAll())
+        return res.payload
+    }
+    return null
+
 }
