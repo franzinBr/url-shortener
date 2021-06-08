@@ -19,8 +19,9 @@
 
 .shortenerForm{
     display: flex;
-    justify-content: center;
-    align-items:flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items:center;
 
 }
 

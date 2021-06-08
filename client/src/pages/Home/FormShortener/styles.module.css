@@ -11,11 +11,13 @@
     display: block;
     width: 90vw;
     border: none;
-    background: #dfe6e9;
+    background: #2D3436;
     outline:none;
     border-radius: 1rem 0 0 1rem;
-    padding: 1rem;
+    padding: 1.2rem;
     z-index: 1;
+    font-size: 1.2rem;
+    color: #bdc3c7;
 }
 
 .shortener {
@@ -46,4 +48,13 @@
     width: 15rem;
     height: 15rem;
 
+}
+
+.errors {
+    width: 90vw;
+}
+
+.errors p{
+    padding-left: 1rem;
+    text-align: left;
 }
