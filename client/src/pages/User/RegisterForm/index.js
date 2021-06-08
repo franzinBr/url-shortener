@@ -18,7 +18,7 @@ const RegisterForm = () => {
     function handleSubmit(event) 
     {
         event.preventDefault()
-        if(fullname.validate() && email.validate() && password.validate()) dispatch(register({fullname, email, password}))
+        if(fullname.validate() && email.validate() && password.validate()) dispatch(register({fullname: fullname.value, email: email.value, password: email.value}))
     }
     
     if(auth?.logged === true) return null

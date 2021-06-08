@@ -17,7 +17,7 @@ const LoginForm = () => {
     function handleSubmit(event) 
     {
         event.preventDefault()
-        if(email.validate() && password.validate()) dispatch(login({email, password}))
+        if(email.validate() && password.validate()) dispatch(login({ email: email.value, password: password.value }))
     }
     if(auth?.logged === true) return null
     return (
