@@ -10,22 +10,25 @@ import useForm from '../../../hooks/useForm'
 const LoginForm = () => {
     const auth = useSelector((state) => state.auth)
     const dispatch = useDispatch();
-
     const email = useForm('email');
-    const password = useForm('password')
+    const password = useForm()
 
-    function handleSubmit(event) 
+    async function handleSubmit(event) 
     {
-        event.preventDefault()
-        if(email.validate() && password.validate()) dispatch(login({ email: email.value, password: password.value }))
+        event.preventDefault();
+        if(email.validate() && password.validate())
+        {
+            await dispatch(login({ email: email.value, password: password.value }))
+        } 
     }
     if(auth?.logged === true) return null
     return (
         <form onSubmit={handleSubmit}>
-            <Input type="text" label="Email" name="email" {...email}  />
-            <Input type="password" label="Password" name="password" {...password} />
+            <Input type="text" label="Email" name="email" {...email} />
+            <Input type="password" label="Password" name="password" {...password}/>
             <Link to="forgot">Forgot Password?</Link>
             <Button>Login</Button>
+            {auth.error && <p>{auth.error}</p>}
             <ChangeForm 
                 title="Register" 
                 to="/user/register"
@@ -33,6 +36,7 @@ const LoginForm = () => {
                 button="Register"
             />
         </form>
+
     )
 }
 
