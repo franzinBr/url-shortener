@@ -1,8 +1,7 @@
 import api from './api'
-import axios from 'axios'
 
 const options = {
-    headers: {"content-type": "application/json"}
+    headers: {"content-type": "application/json"},
 }
 
 // AUTH ENDPOINTS
@@ -23,6 +22,12 @@ export const VALIDATE_PUT = async (verifyToken) => {
 
 export const REFRESH_POST = async () => {
     const res = await api.post('/auth/refresh')
+    return res
+}
+
+export const LOGOUT_POST = async () => {
+    api.defaults.withCredentials = true;
+    const res = await api.post('/auth/logout')
     return res
 }
 
@@ -50,8 +55,10 @@ export const URL_GET = async(code) => {
 }
 
 export const URL_DELETE = async(code, token) => {
-    const res = await api.get('/url', code, {
-        headers: {Authorization:  `Bearer ${token}`}
-    })
+    const res = await api.delete('/url', {
+        headers: { Authorization: `Bearer ${token}`},
+        data: {code}
+        });
+
     return res
 }
