@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { URLALL_GET, URL_DELETE } from '../../services/endpoints'
+import { URLALL_GET, URL_DELETE, URL_POST } from '../../services/endpoints'
 import getNumberOfPages from '../helper/getNumberOfPages'
+import { fetchUrl } from './url'
 
 
 const initialState = {
@@ -26,6 +27,12 @@ const slice = createSlice({
             if(state.numberOfPages < oldNumberOfpages && state.currentPage !== 1) state.currentPage--
 
         },
+        addUrlOnList(state, action) {
+         //   let oldNumberOfpages = state.numberOfPages
+            state.data.push(action.payload)
+            state.numberOfPages =  getNumberOfPages(state.data.length, state.numberItensPerPage)
+            state.currentPage = state.numberOfPages
+        },
         fetchStarted(state) {
             state.loading = true;
         },
@@ -50,7 +57,7 @@ const slice = createSlice({
         }
     } 
 })
-const {fetchStarted, fetchSuccess, fetchError, removeUrlFromList} = slice.actions;
+const {fetchStarted, fetchSuccess, fetchError, removeUrlFromList, addUrlOnList} = slice.actions;
 export const {changePage, previousPage, nextPage, resetState: resetUrlState} = slice.actions;
 export default slice.reducer;
 
@@ -69,6 +76,11 @@ export const fetchUrls = (token) => async (dispatch) => {
 }
 
 export const removeUrl = (code, token) => async (dispatch) => {
-    const res = await URL_DELETE(code, token)
-    if(res.data.success === true ) dispatch(removeUrlFromList(code))
+    const res = await dispatch(fetchUrl(URL_DELETE, code, token));
+    if(res.payload.success === true ) dispatch(removeUrlFromList(code))
+}
+
+export const createUrl = (completeUrl, token) => async(dispatch) => {
+    const res = await dispatch(fetchUrl(URL_POST, completeUrl, token))
+    if(res.payload.success === true) return dispatch(addUrlOnList(res.payload.url))
 }
