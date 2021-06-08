@@ -53,7 +53,7 @@ exports.deleteUrlShortener = async (req, res, next) => {
         if(!deletedUrl) return next(new ErrorResponse("this URL does not exist or does not belong to your account", 404))
 
         res.status(200).json({
-            succes: true,
+            success: true,
             message: "Url deleted"
         })
 
