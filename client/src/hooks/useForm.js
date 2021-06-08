@@ -10,7 +10,7 @@ const types = {
         message: 'the password must contain at least 8 characters, with at least one digit, one lowercase letter, one uppercase letter and one special character',
     },
     url: {
-        regex: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
+        regex: /^(?:http(s)?:\/\/)?[\w.-]+(?:.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
         message: "Invalid URL",
     }
     
