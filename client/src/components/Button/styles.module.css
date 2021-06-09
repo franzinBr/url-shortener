@@ -12,3 +12,12 @@
     margin-top: .5rem;
 
 }
+
+.button:hover{
+    box-shadow: 0 0 0 3px #2d3436;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
