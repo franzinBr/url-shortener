@@ -1,0 +1,16 @@
+.validation {
+    padding-top: 2rem;
+}
+
+.validation p, 
+.validation span {
+    font-size: 2rem;
+}
+
+.validation .invalid {
+    color: red
+}
+
+.validation .verified {
+    color: #4BB543;
+}
