@@ -15,9 +15,9 @@ const Redirect = () => {
                 const res = await URL_GET(code)
                 if(res.success === false) throw new Error(res.error)
                 let url = res.data.completeUrl;
-                if (!url.match(/^http?:\/\//i) || !url.match(/^https?:\/\//i)) url = `http://${url}`;
+                var reg = new RegExp("^(http|https)://", "i");
+                if (!reg.test(url)) url = `http://${url}`;
                 window.location.href = url;
-                
             } catch (error) {
                 navigate('/')
             }
