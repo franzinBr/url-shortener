@@ -20,6 +20,16 @@ export const VALIDATE_PUT = async (verifyToken) => {
     return res
 }
 
+export const FORGOTPASSWORD_POST = async (email) => {
+    const res = await api.post('/auth/forgotpassword', email, options)
+    return res
+}
+
+export const RESETPASSWORD_PUT = async (tokenReset, password) => {
+    const res = await api.put(`/auth/resetpassword/${tokenReset}`, password)
+    return res
+}
+
 export const REFRESH_POST = async () => {
     const res = await api.post('/auth/refresh')
     return res
