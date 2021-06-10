@@ -15,7 +15,7 @@ const VerifyEmail = () => {
             try {
                 const res = await VALIDATE_PUT(token)
                 console.log(res)
-                setResult(res.success)
+                setResult(res.data.success)
                 
             } catch (error) {
                 
