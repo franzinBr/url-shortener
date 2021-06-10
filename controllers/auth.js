@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const {getAuthToken, getRefreshToken} = require('../utils/jwtUtil')
 const {convertTimes} = require('../utils/convertTimes')
+const emailSender = require('../utils/emailSender')
 
 exports.register = async (req, res, next) => {
     const {fullname, email, password} = req.body;
@@ -13,6 +14,18 @@ exports.register = async (req, res, next) => {
         const verifyEmailToken = user.getVerifyEmailToken()
 
         // Send email here!!!
+        const confirmUrl = `${process.env.FRONT_URL}/user/verify/${verifyEmailToken}`;
+
+        const message = `
+            <h1>This email was used to create an account on the Shorteener Url website</h1>
+            <p>click on this link to confirm your registration</p>
+            <a href=${confirmUrl} clicktracking=off>${confirmUrl}</a>
+        `
+        await emailSender({
+            to: user.email,
+            subject: "Confirm your account",
+            text: message
+        });
         
         console.log(verifyEmailToken)
 
@@ -107,18 +120,63 @@ exports.refresh = async (req, res, next) => {
     }
 };
 
-exports.forgotpassword = (req, res, next) => {
-    res.status(200).json({
-        sucess: true,
-        message: "forgot password router"
-    })
+exports.forgotpassword = async (req, res, next) => {
+    const { email } = req.body;
+
+    try {
+        const user = await User.findOne({email});
+        if(!user) return next(new ErrorResponse('Email could not be sent', 404))
+
+        const resetToken = user.getResetPasswordToken();
+
+        const resetUrl = `${process.env.FRONT_URL}/user/reset/${resetToken}`;
+
+        const message = `
+            <h1>A password reset was requested</h1>
+            <p>Hello, ${user.fullname}</p>
+            <p>this link is valid for only ${process.env.TOKEN_PASSWORD_EXPIRE}</p>
+            <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+        `
+
+        try {
+            await emailSender({
+                to: user.email,
+                subject: "Password Reset",
+                text: message
+            });
+    
+            res.status(200).json({
+                success: true,
+                message: "Email Sent"
+            });
+
+        } catch (error) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save();
+            return next(new ErrorResponse("Email could not be send", 500))
+        }
+
+    } catch (error) {
+        next(error);
+    }
 };
 
-exports.resetpassword = (req, res, next) => {
-    res.status(200).json({
-        sucess: true,
-        message: "reset password router"
-    })
+exports.resetpassword = async (req, res, next) => {
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.tokenReset).digest("hex");
+
+    try {
+        const user = await User.findOne({
+            resetPasswordToken,
+            resetPasswordExpire: { $gt: Date.now()}
+        })
+        if(!user) if(!user) return next(new ErrorResponse("Invalid Reset Token", 400))
+        user.setNewPassword(req.body.password)
+        res.status(201).json({success: true, message: "password reset successfully"})
+
+    } catch (error) {
+        next(error)
+    }
 };
 
 
