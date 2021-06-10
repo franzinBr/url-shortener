@@ -27,8 +27,8 @@ const LoginForm = () => {
             <Input type="text" label="Email" name="email" {...email} />
             <Input type="password" label="Password" name="password" {...password}/>
             <Link to="forgot">Forgot Password?</Link>
-            <Button>Login</Button>
-            {auth.error && <p>{auth.error}</p>}
+            {auth.loading ? <Button disabled>Login</Button> : <Button>Login</Button> }
+            {auth.error && <p className="error">{auth.error}</p>}
             <ChangeForm 
                 title="Register" 
                 to="/user/register"

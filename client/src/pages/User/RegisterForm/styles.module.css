@@ -1,0 +1,11 @@
+.confirm {
+    padding-top: 2rem;
+}
+
+.confirm .confirmText {
+    font-size: 1.5rem;
+}
+
+.confirm .confirmText span {
+    color: green;
+}
