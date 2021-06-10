@@ -41,6 +41,8 @@ export default slice.reducer;
 
 const {fetchStarted, fetchSuccess, fetchError, resetState: resetAuthState} = slice.actions;
 
+export {resetAuthState};
+
 const fetchUser = (request, data = []) => async (dispatch) => {
     try {
         dispatch(fetchStarted());
