@@ -6,6 +6,7 @@ import RegisterForm from './RegisterForm'
 import ForgotForm from './ForgotForm'
 import VerifyEmail from './VerifyEmail'
 import { useSelector } from 'react-redux'
+import ResetForm from './ResetForm'
 
 
 
@@ -19,11 +20,11 @@ const User = () => {
         let {pathname} = location;
         const sep = pathname.split(/(?=[/])|(?<=[/])/g)
         if(sep.length >4) pathname = sep[0]+sep[1]+sep[2]+sep[3]
-        console.log(pathname)
         const path = {
             '/user/register' : 'Register',
             '/user/forgot' : 'Forgot Password?',
-            '/user/verify' : "Verification"
+            '/user/verify' : "Verification",
+            '/user/reset' : "Reset Password"
         }
         setTitle(path[pathname] ?  path[pathname]  : 'Login')
 
@@ -40,6 +41,8 @@ const User = () => {
                     <Route path="forgot" element={<ForgotForm/>} />
                     <Route path="verify" element={<Navigate to="/" />}/>
                     <Route path="verify/:token" element={<VerifyEmail/>} />
+                    <Route path="reset" element={<Navigate to="/"/>} />
+                    <Route path="reset/:token" element={<ResetForm />} />
                     <Route path="*" element={<Navigate to="/" />}/>
                 </Routes>
             </div>
