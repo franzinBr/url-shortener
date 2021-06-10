@@ -30,7 +30,7 @@ const Input = ({type, name, label, value, onChange, error, onBlur}) => {
                 <span className={styles.placeholder}>{label}</span>
             </label>
             {type === "password" && <span onClick={swap} className={styles.hide}>{passwordType === "password" ? <Show /> : <Hide />}</span>}
-            {error && <p>{error}</p>}
+            {error && <p className="error">{error}</p>}
         </div>
     )
 }
