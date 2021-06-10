@@ -43,6 +43,12 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
+if(process.env.NODE_ENV === 'production')
+{
+  console.log("[NODE PRODUCTION]")
+  app.use(express.static('client/build'))
+}
+
 
 const server = app.listen(PORT, () => console.log(`Server running on ${PORT}`))
 
