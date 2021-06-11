@@ -53,7 +53,17 @@
     word-wrap:break-word;
     max-width: 1px;
 }
+/* 
+.tableContainer .table .cell {
+    margin: none;
+    display: flex;
+    justify-content: space-between;
+} */
 
+.tableContainer .table .cellCode {
+    display: flex;
+    justify-content: space-between;
+}
 
 @media (max-width: 768px){
     .tableContainer .table thead {
