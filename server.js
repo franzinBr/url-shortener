@@ -6,7 +6,7 @@ const cors = require('cors')
 var cookieParser = require('cookie-parser')
 const connectMongoDB = require('./config/db');
 const errorHandler = require('./middlewares/error')
-
+const path = require('path')
 
 // Database
 connectMongoDB();
