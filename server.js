@@ -18,7 +18,11 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended:false}));
 app.use(morgan("common"))
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
 app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
 
 /*const corsConfig = {
