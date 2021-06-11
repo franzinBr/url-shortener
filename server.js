@@ -18,7 +18,11 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended:false}));
 app.use(morgan("common"))
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
 app.use(cors({ origin: process.env.FRONT_URL, credentials: true }));
 
 /*const corsConfig = {
@@ -46,9 +50,9 @@ const PORT = process.env.PORT || 5000;
 if(process.env.NODE_ENV === 'production')
 {
   console.log("[NODE PRODUCTION]")
-  app.use(express.static('client/build'))
+  app.use(express.static(path.join(__dirname, '/client/build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   })
 }
 
