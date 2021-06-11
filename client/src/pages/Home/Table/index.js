@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUrls, selectItemsPage } from '../../../store/slices/table'
-import DeleteButton from './DeleteButton/Index'
+import DeleteButton from './DeleteButton'
+import CopyButton from './CopyButton'
 import Pagination from './Pagination'
 import styles from './styles.module.css'
 
@@ -34,7 +35,11 @@ const Table = () => {
                         <tr key={row} >
                             {Object.entries(item).reverse().map((url, column) => (
                                 <td key={column} data-heading={url[0]}>
-                                    {url[1]}
+                                    {url[0] === 'code' ? (<div className={styles.cellCode}> 
+                                        <p>{url[1]}</p>
+                                        <CopyButton code={url[1]}/>
+                                    </div>) : <p>{url[1]}</p>}
+
                                 </td>
                                 )) }
                             <td data-heading="delete"> <DeleteButton code={item.code} /> </td>
