@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 const api = axios.create({
-    baseURL: 'http://localhost:3080/api/v1',
+    baseURL: 'https://shturl.herokuapp.com/api/v1',
 
 })
 
