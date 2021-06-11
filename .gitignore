@@ -1,7 +1,6 @@
 node_modules/
 config.env
 .vscode/
-build/
 
 /node_modules
 /.pnp
