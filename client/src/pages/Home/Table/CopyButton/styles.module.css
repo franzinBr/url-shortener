@@ -4,5 +4,13 @@
     background: none;
     border: none;
     display: flex;
+    margin: 0;
+    outline: none;
     align-items: center;
+    cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+    outline: none;
 }
